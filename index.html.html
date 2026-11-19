@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<!-- AI Video Portfolio · Supabase Cloud Edition · 2026-11-19 -->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#f4f5f6" />
+<title>AI 视频创作作品集｜个人能力展示</title>
+<style>
+  :root{
+    --bg:#f4f5f6; --paper:#fff; --ink:#17212b; --muted:#65717d; --line:#e3e7ea;
+    --soft:#edf1f3; --accent:#b4f06a; --accent-dark:#29421b; --blue:#dce9f2;
+    --radius:22px; --shadow:0 18px 55px rgba(22,35,46,.07); --max:1160px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:92px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.6}
+  button,input{font:inherit}
+  button{cursor:pointer}
+  a{color:inherit;text-decoration:none}
+  .progress{position:fixed;z-index:99;top:0;left:0;height:3px;width:0;background:#9ad64f}
+  .nav-wrap{position:sticky;top:0;z-index:50;background:rgba(244,245,246,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(220,225,229,.8)}
+  .nav{max-width:var(--max);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+  .brand-mark{width:31px;height:31px;border-radius:10px;background:var(--ink);display:grid;place-items:center;color:var(--accent);font-size:17px}
+  .brand small{display:block;font-size:9px;letter-spacing:.16em;color:#87919a;font-weight:700;margin-top:-3px}
+  .nav-links{display:flex;align-items:center;gap:22px;font-size:12px;color:#58636d;font-weight:650}
+  .nav-links a:hover{color:#111}
+  .nav-actions{display:flex;gap:8px;align-items:center}
+  .btn{border:1px solid var(--line);border-radius:999px;padding:10px 16px;background:#fff;color:var(--ink);font-size:12px;font-weight:750;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(20,30,40,.09)}
+  .btn.dark{background:var(--ink);border-color:var(--ink);color:#fff}
+  .btn.lime{background:var(--accent);border-color:var(--accent);color:#24321a}
+  .btn.small{padding:7px 11px;font-size:11px}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .hero{padding:58px 0 34px;display:grid;grid-template-columns:1.07fr .93fr;gap:36px;align-items:center}
+  .eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#71808c;font-weight:800;display:flex;align-items:center;gap:9px}
+  .eyebrow:before{content:"";width:22px;height:2px;background:#9bd64d}
+  h1{font-size:clamp(40px,6vw,72px);line-height:1.06;letter-spacing:-.065em;margin:19px 0 18px;font-weight:850}
+  h1 em{font-style:normal;color:#84939d}
+  .hero-copy{font-size:15px;color:#5e6a74;max-width:580px;line-height:1.9}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 27px}
+  .tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;background:rgba(255,255,255,.72);font-size:11px;color:#58646e;font-weight:700}
+  .tag .dot{width:6px;height:6px;border-radius:50%;background:#9ddc55}
+  .hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+  .hero-visual{min-height:410px;border-radius:30px;background:#18242d;position:relative;overflow:hidden;box-shadow:var(--shadow);padding:22px;color:#fff}
+  .hero-visual:before{content:"";position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,#b7ed74 0%,rgba(183,237,116,.35) 38%,transparent 70%);right:-105px;top:-125px;filter:blur(5px)}
+  .hero-visual:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;border:1px solid rgba(255,255,255,.17);right:18px;top:39px;box-shadow:0 0 0 35px rgba(255,255,255,.025),0 0 0 70px rgba(255,255,255,.02)}
+  .visual-top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;color:#b9c4ca;font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+  .live-pill{border:1px solid rgba(255,255,255,.22);padding:6px 9px;border-radius:99px;color:#d7e2e8;letter-spacing:.04em}
+  .visual-center{position:absolute;z-index:2;left:26px;right:26px;top:105px;bottom:28px;display:flex;flex-direction:column;justify-content:flex-end}
+  .visual-sun{position:absolute;right:13%;top:10px;width:130px;height:130px;border-radius:50%;background:linear-gradient(140deg,#d7f6a2,#7da84d);box-shadow:0 0 65px rgba(178,233,113,.32)}
+  .visual-horizon{position:absolute;left:-10%;right:-10%;height:48%;bottom:0;background:linear-gradient(170deg,transparent 0 20%,rgba(142,174,151,.4) 21% 22%,#455a50 23% 40%,#263b38 41%);clip-path:polygon(0 42%,22% 15%,42% 41%,65% 0,100% 32%,100% 100%,0 100%)}
+  .visual-caption{position:relative;z-index:2;font-size:10px;letter-spacing:.16em;color:#c3d2d4;text-transform:uppercase}
+  .visual-title{position:relative;z-index:2;font-size:34px;line-height:1.1;font-weight:800;letter-spacing:-.05em;margin:8px 0}
+  .visual-note{position:relative;z-index:2;color:#c5d0d3;font-size:11px;max-width:260px}
+  .visual-index{position:absolute;z-index:2;right:2px;bottom:6px;font-size:65px;font-weight:850;letter-spacing:-.08em;color:rgba(255,255,255,.12)}
+  .hero-foot{display:flex;gap:20px;margin-top:27px;color:#798690;font-size:10px;flex-wrap:wrap}
+  .hero-foot strong{color:#27343d;font-size:13px;display:block;letter-spacing:-.02em}
+  .section{padding:66px 0 18px}
+  .section-head{display:flex;justify-content:space-between;gap:28px;align-items:flex-end;margin-bottom:26px}
+  .section-kicker{font-size:10px;letter-spacing:.16em;color:#8b969e;font-weight:850;text-transform:uppercase}
+  h2{font-size:clamp(27px,4vw,42px);letter-spacing:-.055em;line-height:1.13;margin:7px 0 0;font-weight:830}
+  .section-intro{max-width:410px;color:#6f7a83;font-size:12px;line-height:1.8}
+  .card{background:var(--paper);border:1px solid #e8ecee;border-radius:var(--radius);box-shadow:0 5px 20px rgba(20,35,45,.025)}
+  .notice{background:#f0f5e9;border:1px solid #e0ebd3;color:#4b603d;border-radius:14px;padding:13px 16px;font-size:11px;line-height:1.75;display:flex;gap:10px;align-items:flex-start;margin-bottom:20px}
+  .notice b{color:#2d461e}
+  .notice-icon{width:19px;height:19px;border-radius:50%;background:#d9edc5;display:grid;place-items:center;flex:none;font-weight:900}
+  .intro-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+  .intro-panel{padding:27px 29px}
+  .intro-panel h3{font-size:18px;margin:0 0 10px;letter-spacing:-.03em}
+  .intro-panel p{font-size:12px;color:#6b7780;line-height:1.9;margin:0}
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:21px}
+  .mini-stat{background:#f5f7f7;border-radius:13px;padding:12px}
+  .mini-stat strong{display:block;font-size:21px;letter-spacing:-.06em}
+  .mini-stat span{font-size:10px;color:#78838b}
+  .principles{padding:26px 28px;display:grid;gap:15px}
+  .principle{display:flex;gap:13px;align-items:flex-start}
+  .principle-num{width:25px;height:25px;border-radius:8px;background:#edf3e7;color:#5b7c3c;font-size:10px;font-weight:850;display:grid;place-items:center;flex:none}
+  .principle b{display:block;font-size:12px;margin-bottom:2px}
+  .principle span{font-size:10px;color:#77828a}
+  .skill-table{overflow:hidden}
+  .table-head,.skill-row{display:grid;grid-template-columns:1.05fr .75fr 1.7fr .65fr;gap:15px;align-items:center;padding:15px 21px}
+  .table-head{background:#f7f8f8;color:#89939b;font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:850}
+  .skill-row{border-top:1px solid #edf0f1;font-size:11px}
+  .skill-name{font-weight:800;font-size:12px}
+  .skill-sub{display:block;color:#9aa3a9;font-size:9px;font-weight:500;margin-top:2px}
+  .level{display:inline-flex;padding:5px 9px;border-radius:99px;background:#edf4e6;color:#4e6d31;font-size:10px;font-weight:800;white-space:nowrap}
+  .evidence{color:#6f7b84}
+  .status{font-size:9px;color:#9a7b3c;background:#fbf4e5;border-radius:99px;padding:5px 8px;text-align:center;font-weight:800}
+  .works-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:17px}
+  .filters{display:flex;gap:7px;flex-wrap:wrap}
+  .filter{border:1px solid var(--line);border-radius:99px;background:#fff;color:#77828a;padding:7px 12px;font-size:10px;font-weight:750}
+  .filter.active{background:#18242d;border-color:#18242d;color:white}
+  .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+  .work-card{overflow:hidden;transition:.2s}
+  .work-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .media-frame{height:205px;background:#e8ecec;position:relative;overflow:hidden;display:grid;place-items:center}
+  .media-frame video,.media-frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .placeholder-art{position:absolute;inset:0;overflow:hidden;display:flex;align-items:flex-end;padding:19px;color:white}
+  .placeholder-art:before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,#c6d9d1,#7a9b91 55%,#324b48)}
+  .placeholder-art.warm:before{background:linear-gradient(145deg,#f2d5ba,#bc8f7c 55%,#68534f)}
+  .placeholder-art.blue:before{background:linear-gradient(145deg,#cfdfeb,#7596aa 55%,#344d61)}
+  .placeholder-art .orb{position:absolute;width:150px;height:150px;border-radius:50%;right:14%;top:13%;background:rgba(255,237,201,.65);filter:blur(1px)}
+  .placeholder-art .mountain{position:absolute;left:-8%;right:-8%;bottom:0;height:60%;background:rgba(24,48,47,.48);clip-path:polygon(0 65%,23% 25%,42% 60%,64% 0,100% 50%,100% 100%,0 100%)}
+  .placeholder-art .mock-label{position:relative;z-index:2;font-size:20px;font-weight:850;letter-spacing:-.05em;max-width:170px;line-height:1.15}
+  .placeholder-art .mock-no{position:absolute;right:12px;top:6px;font-size:61px;font-weight:900;color:rgba(255,255,255,.23);letter-spacing:-.1em}
+  .media-chip{position:absolute;top:12px;left:12px;z-index:4;padding:6px 9px;border-radius:99px;background:rgba(15,26,32,.58);backdrop-filter:blur(10px);color:#fff;font-size:9px;font-weight:750}
+  .upload-cover{position:absolute;right:12px;bottom:12px;z-index:5}
+  .file-label{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.6);border-radius:99px;padding:7px 10px;font-size:9px;font-weight:800;color:#26323a;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .file-label input{display:none}
+  .work-body{padding:18px 18px 17px}
+  .work-meta{display:flex;justify-content:space-between;align-items:center;color:#8b969e;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .work-body h3{font-size:17px;letter-spacing:-.04em;margin:7px 0 6px}
+  .work-body p{font-size:10px;line-height:1.75;color:#748089;min-height:38px;margin:0 0 13px}
+  .skill-chips{display:flex;gap:5px;flex-wrap:wrap}
+  .skill-chips span{font-size:9px;background:#f2f4f4;color:#64717a;border-radius:5px;padding:4px 7px}
+  .work-bottom{border-top:1px solid #edf0f1;margin-top:14px;padding-top:11px;display:flex;justify-content:space-between;align-items:center}
+  .work-bottom small{font-size:9px;color:#9aa3a9}
+  .text-btn{border:0;background:none;color:#536d3e;font-size:10px;font-weight:850;padding:4px 0}
+  .subnav{display:flex;gap:8px;margin:0 0 17px}
+  .subnav button{border:1px solid var(--line);background:white;border-radius:10px;padding:9px 13px;font-size:11px;font-weight:800;color:#77828a}
+  .subnav button.active{background:#18242d;color:#fff;border-color:#18242d}
+  .skill-block{padding:25px}
+  .block-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:20px}
+  .block-top h3{margin:0;font-size:21px;letter-spacing:-.045em}
+  .block-top p{margin:5px 0 0;color:#79848c;font-size:11px;line-height:1.8;max-width:620px}
+  .block-code{font-size:10px;font-weight:850;color:#96a0a7;letter-spacing:.12em}
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+  .image-slot{border:1px solid #e8ecee;border-radius:14px;overflow:hidden;background:#f4f6f5}
+  .image-preview{aspect-ratio:4/3;position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#d7e4da,#79998a)}
+  .image-preview:before{content:"";position:absolute;width:42%;aspect-ratio:1;border-radius:50%;background:rgba(255,240,214,.65);top:12%;right:17%}
+  .image-preview:after{content:"";position:absolute;left:-10%;right:-10%;height:54%;bottom:-2%;background:rgba(42,69,61,.52);clip-path:polygon(0 55%,22% 18%,43% 54%,68% 0,100% 51%,100% 100%,0 100%)}
+  .image-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+  .image-preview .slot-word{position:absolute;z-index:1;left:12px;bottom:10px;color:white;font-size:12px;font-weight:850;text-shadow:0 1px 8px #263b35}
+  .image-slot:nth-child(2) .image-preview{background:linear-gradient(135deg,#eadacb,#b88c7b)}
+  .image-slot:nth-child(3) .image-preview{background:linear-gradient(135deg,#d5e4eb,#7899aa)}
+  .image-slot:nth-child(4) .image-preview{background:linear-gradient(135deg,#e8e1cb,#9da27b)}
+  .image-slot:nth-child(5) .image-preview{background:linear-gradient(135deg,#ddd6e7,#9083a9)}
+  .image-slot:nth-child(6) .image-preview{background:linear-gradient(135deg,#d7e4dc,#739c8a)}
+  .image-info{padding:10px 11px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .image-info b{font-size:10px}
+  .image-info small{font-size:9px;color:#929da4}
+  .image-info .file-label{font-size:9px;padding:5px 8px;box-shadow:none;background:#fff}
+  .prompt-layout{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:17px}
+  .prompt-card{border:1px solid #e7ebed;border-radius:14px;padding:15px;background:#fbfcfc;min-width:0}
+  .prompt-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+  .prompt-head b{font-size:11px}
+  .prompt-text{font-size:10px;line-height:1.8;color:#66737c;min-height:75px;white-space:pre-wrap}
+  .model-line{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .model-line span{font-size:9px;color:#78848c;background:#f1f4f4;padding:5px 8px;border-radius:5px}
+  .consistency{margin-top:17px;padding:16px;background:#f6f8f6;border-radius:14px}
+  .consistency-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:12px}
+  .consistency-head b{font-size:11px}
+  .consistency-head span{font-size:9px;color:#849089}
+  .compare-people{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .person-scene{min-height:104px;border-radius:10px;position:relative;overflow:hidden;background:linear-gradient(150deg,#e7d9c8,#9cae9d);display:flex;align-items:flex-end;padding:9px;color:#fff;font-size:9px;font-weight:800}
+  .person-scene:nth-child(2){background:linear-gradient(150deg,#cddbe4,#8196a2)}
+  .person-scene:nth-child(3){background:linear-gradient(150deg,#e3d6d3,#9f8b87)}
+  .person-silhouette{position:absolute;width:53px;height:53px;border-radius:50% 50% 44% 44%;background:rgba(48,57,57,.42);top:15px;left:calc(50% - 26px)}
+  .person-silhouette:before{content:"";position:absolute;width:30px;height:33px;border-radius:48%;background:rgba(48,57,57,.55);left:11px;top:-12px}
+  .person-scene span{z-index:1;text-shadow:0 1px 6px #334}
+  .video-iterations{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+  .iteration{border:1px solid #e7ebed;border-radius:14px;overflow:hidden;background:#fff}
+  .iteration-media{height:145px;background:#e8eceb;position:relative;display:grid;place-items:center;overflow:hidden}
+  .iteration-media video{width:100%;height:100%;object-fit:cover}
+  .iteration-placeholder{position:absolute;inset:0;background:linear-gradient(135deg,#c8d7d2,#6b8d83);display:grid;place-items:center;color:rgba(255,255,255,.8);font-size:35px;font-weight:900;letter-spacing:-.08em}
+  .iteration:nth-child(2) .iteration-placeholder{background:linear-gradient(135deg,#d5dce1,#8297a4)}
+  .iteration:nth-child(3) .iteration-placeholder{background:linear-gradient(135deg,#dce6cd,#8ca46b)}
+  .iteration-label{position:absolute;top:9px;left:9px;background:rgba(20,31,36,.62);color:white;border-radius:99px;padding:5px 8px;font-size:9px;font-weight:800}
+  .iteration-info{padding:12px}
+  .iteration-info b{font-size:11px}
+  .iteration-info p{font-size:9px;color:#7f8a91;line-height:1.7;margin:5px 0 10px;min-height:30px}
+  .iteration-footer{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .iteration-footer small{color:#98a1a7;font-size:9px}
+  details{border:1px solid #e7ebed;border-radius:13px;padding:13px 15px;margin-top:15px;background:#fbfcfc}
+  summary{font-size:11px;font-weight:850;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+  summary:after{content:"＋";color:#788b67} details[open] summary:after{content:"－"}
+  .params{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+  .param{background:#f1f4f3;padding:10px;border-radius:9px}
+  .param small{display:block;color:#87929a;font-size:9px}
+  .param b{font-size:11px}
+  .boundary{margin-top:14px;padding:12px 14px;border-left:3px solid #b4e77b;background:#f6f9f1;color:#68785b;font-size:10px;line-height:1.8}
+  .post-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  .subtitle-demo{background:#1d2930;border-radius:16px;padding:14px;color:#fff;overflow:hidden}
+  .subtitle-screen{height:215px;border-radius:11px;position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:20px;background:linear-gradient(150deg,#c8d7c8,#809b8c 45%,#394f4b)}
+  .subtitle-screen:before{content:"";position:absolute;width:100px;height:100px;background:#f4e4bd;border-radius:50%;right:20%;top:15%;box-shadow:0 0 45px rgba(246,231,195,.4)}
+  .subtitle-screen:after{content:"";position:absolute;left:-15%;right:-15%;bottom:0;height:55%;background:rgba(29,53,48,.55);clip-path:polygon(0 64%,23% 20%,45% 62%,69% 0,100% 49%,100% 100%,0 100%)}
+  .subtitle-line{z-index:2;position:relative;text-align:center;font-size:19px;font-weight:900;letter-spacing:.04em;text-shadow:0 2px 6px rgba(0,0,0,.7);padding:6px 10px;max-width:90%}
+  .subtitle-line.off{opacity:0}
+  .subtitle-toolbar{display:flex;justify-content:space-between;align-items:center;margin-top:11px;gap:10px}
+  .toggle{display:flex;background:#293840;padding:3px;border-radius:99px;gap:2px}
+  .toggle button{border:0;background:transparent;color:#aab7bc;border-radius:99px;padding:6px 10px;font-size:9px;font-weight:800}
+  .toggle button.active{background:#d9f2bb;color:#26381b}
+  .subtitle-styles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}
+  .style-card{border:1px solid #e8ecee;border-radius:12px;padding:12px;background:#fff}
+  .style-sample{height:48px;border-radius:8px;background:#26343b;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:900;text-shadow:0 1px 4px #000;margin-bottom:8px}
+  .style-card:nth-child(2) .style-sample{font-size:10px;background:#7e8e8a}
+  .style-card:nth-child(3) .style-sample{background:#dce4d7;color:#26352a;text-shadow:none;font-style:italic}
+  .style-card b{font-size:10px}
+  .style-card small{display:block;color:#87929a;font-size:9px;margin-top:3px}
+  .rules{padding:19px;margin-top:13px}
+  .rules h4{font-size:11px;margin:0 0 10px}
+  .rule-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .rule{display:flex;gap:8px;font-size:9px;color:#6f7b83;align-items:center}
+  .rule:before{content:"✓";width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:#edf5e5;color:#5f803e;font-size:9px;font-weight:900;flex:none}
+  .voice-list{display:grid;gap:9px}
+  .voice-item{display:grid;grid-template-columns:35px 1fr auto;gap:11px;align-items:center;padding:13px;border:1px solid #e8ecee;border-radius:13px;background:#fff}
+  .voice-icon{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:#edf3e8;color:#628146;font-size:15px}
+  .voice-meta b{font-size:11px;display:block}
+  .voice-meta small{font-size:9px;color:#8a959c}
+  .wave{height:21px;display:flex;align-items:center;gap:2px;margin-top:5px;opacity:.65}
+  .wave i{width:3px;border-radius:4px;background:#91b66b;height:var(--h)}
+  .voice-item audio{width:100%;grid-column:2/4;height:28px;display:none}
+  .voice-item.has-audio audio{display:block}
+  .audio-note{font-size:9px;color:#9aa3a9;margin-top:10px;line-height:1.7}
+  .edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}
+  .edit-panel{padding:20px}
+  .edit-panel h4{margin:0 0 6px;font-size:13px}
+  .edit-panel p{margin:0 0 13px;color:#7d8890;font-size:10px;line-height:1.7}
+  .grade-stage{height:155px;border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(145deg,#d6cbb8,#8b9a83 55%,#354b45);}
+  .grade-scene{position:absolute;inset:0;background:linear-gradient(145deg,#dce7d8,#8cb2a0 52%,#334d48);filter:saturate(1.35) contrast(1.08);clip-path:inset(0 50% 0 0)}
+  .grade-scene:after{content:"调色后";position:absolute;right:10px;top:10px;color:white;font-size:9px;font-weight:800}
+  .grade-tag{position:absolute;left:10px;top:10px;color:#fff;font-size:9px;font-weight:800;text-shadow:0 1px 4px #000}
+  .range{width:100%;accent-color:#8dc64d;margin:12px 0 2px}
+  .before-after{display:flex;justify-content:space-between;color:#8a959b;font-size:9px}
+  .workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .step{padding:17px;border-radius:14px;background:#fff;border:1px solid #e8ecee;position:relative;min-height:140px}
+  .step-no{font-size:9px;color:#91a083;letter-spacing:.12em;font-weight:900}
+  .step h4{margin:13px 0 5px;font-size:12px}
+  .step p{margin:0;font-size:9px;color:#7a858d;line-height:1.75}
+  .week-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  .week{padding:19px;background:#f9faf9;border:1px solid #e9edeb;border-radius:14px}
+  .week small{color:#8a969c;font-size:9px;letter-spacing:.13em;font-weight:850}
+  .week h4{font-size:14px;margin:7px 0}
+  .week p{font-size:10px;color:#728087;line-height:1.8;margin:0}
+  .week ul{padding-left:16px;margin:10px 0 0;color:#6f7c82;font-size:9px;line-height:1.9}
+  .tracker{padding:22px;margin-top:15px}
+  .tracker-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:15px}
+  .tracker-head h3{font-size:15px;margin:0}
+  .tracker-head span{font-size:9px;color:#87929a}
+  .tracker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .tracker label{display:block;color:#7d8990;font-size:9px;margin-bottom:5px}
+  .tracker input{width:100%;border:1px solid #e5e9eb;border-radius:9px;padding:9px 10px;background:#fbfcfc;color:#29353d;font-size:12px;outline:none}
+  .tracker input:focus{border-color:#a8d477}
+  .tracker-foot{font-size:9px;color:#9aa3a9;margin-top:10px}
+  .contact{padding:34px;border-radius:25px;background:#19262e;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:25px;position:relative;overflow:hidden}
+  .contact:after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;right:10%;top:-170px;background:rgba(180,240,106,.14);filter:blur(5px)}
+  .contact h2{font-size:33px;max-width:520px;position:relative;z-index:1}
+  .contact p{font-size:11px;color:#b1bdc3;position:relative;z-index:1}
+  .contact-actions{display:flex;gap:9px;position:relative;z-index:1;flex-wrap:wrap}
+  footer{padding:25px 0 40px;color:#99a3a9;font-size:9px;display:flex;justify-content:space-between;gap:15px}
+  .modal{position:fixed;inset:0;z-index:100;background:rgba(13,21,26,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+  .modal.open{display:flex}
+  .modal-box{width:min(900px,100%);max-height:90vh;overflow:auto;border-radius:20px;background:#fff;padding:18px;position:relative}
+  .modal-close{position:absolute;top:13px;right:13px;border:0;background:#eef1f1;width:31px;height:31px;border-radius:50%;font-size:17px}
+  .modal-media{background:#101b21;border-radius:13px;min-height:250px;display:grid;place-items:center;overflow:hidden;color:#dce5e8}
+  .modal-media video,.modal-media img{max-width:100%;max-height:65vh;display:block}
+  .modal-title{font-size:17px;margin:13px 0 4px}
+  .modal-desc{font-size:11px;color:#748089;line-height:1.8}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#19262e;color:white;border-radius:99px;padding:10px 16px;font-size:11px;z-index:120;opacity:0;pointer-events:none;transition:.25s}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .muted{color:#96a0a6}
+  .hide{display:none!important}
+  .print-only{display:none}
+  @media(max-width:900px){.nav-links{gap:12px}.nav-links a:nth-child(n+4){display:none}.hero{grid-template-columns:1fr .8fr}.hero-visual{min-height:360px}.works-grid{grid-template-columns:repeat(2,1fr)}.workflow{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:650px){
+    .nav{padding:11px 16px}.nav-links{display:none}.nav-actions .btn:first-child{display:none}.wrap{padding:0 16px}.hero{padding:36px 0 20px;grid-template-columns:1fr;gap:24px}.hero-visual{min-height:310px}.visual-center{top:77px}.visual-sun{width:100px;height:100px}.hero-foot{gap:15px}.section{padding:48px 0 10px}.section-head{display:block}.section-intro{margin-top:12px}.intro-grid,.post-grid,.edit-grid{grid-template-columns:1fr}.mini-stats{gap:6px}.mini-stat{padding:10px}.table-head{display:none}.skill-row{grid-template-columns:1fr auto;gap:5px 10px;padding:13px 15px}.skill-row .evidence{grid-column:1/3;grid-row:2}.skill-row .status{grid-column:2;grid-row:1}.works-grid{grid-template-columns:1fr}.media-frame{height:220px}.works-toolbar{display:block}.filters{margin-top:10px}.gallery-grid{grid-template-columns:repeat(2,1fr)}.prompt-layout{grid-template-columns:1fr}.block-top{display:block}.block-code{display:block;margin-top:8px}.video-iterations{grid-template-columns:1fr}.iteration-media{height:180px}.params{grid-template-columns:repeat(2,1fr)}.subtitle-styles{grid-template-columns:1fr 1fr}.compare-people{gap:6px}.person-scene{min-height:90px}.workflow{grid-template-columns:1fr 1fr}.week-grid{grid-template-columns:1fr}.tracker-grid{grid-template-columns:1fr}.contact{display:block;padding:26px}.contact h2{font-size:28px}.contact-actions{margin-top:18px}footer{display:block;line-height:2.1}.voice-item{grid-template-columns:35px 1fr}.voice-item .file-label{grid-column:2;justify-self:start}.voice-item audio{grid-column:1/3}.section-head h2{font-size:31px}
+  }
+  @media print{
+    @page{size:A4;margin:12mm}
+    body{background:#fff;font-size:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .progress,.nav-wrap,.hero-cta,.upload-cover,.file-label,.filters,.subnav,.text-btn,.contact-actions,.toast,.modal,.no-print{display:none!important}
+    .wrap{max-width:none;padding:0}.hero{padding:10px 0 15px;grid-template-columns:1.1fr .9fr;gap:15px}.hero-visual{min-height:230px}.visual-center{top:65px}.visual-title{font-size:24px}.section{padding:25px 0 7px;break-inside:avoid}.section-head{margin-bottom:14px}.section-head h2{font-size:26px}.card{box-shadow:none;break-inside:avoid}.works-grid{grid-template-columns:repeat(3,1fr)}.media-frame{height:115px}.work-body{padding:10px}.work-body p{min-height:0}.skill-block{padding:15px}.image-preview{aspect-ratio:4/3}.iteration-media{height:95px}.subtitle-screen{height:140px}.voice-item audio{display:none!important}.contact{padding:20px}.contact h2{font-size:24px}footer{padding:15px 0}.print-only{display:block}.section#skills,.section#works,.section#generation,.section#post,.section#workflow{break-before:page}.hero{break-after:avoid}#image-panel,#video-panel{display:block!important}#video-panel{margin-top:12px}
+  }
+
+  .cloud-bar{max-width:var(--max);margin:14px auto 0;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .cloud-state{font-size:11px;color:#66737c;display:flex;align-items:center;gap:8px}
+  .cloud-dot{width:8px;height:8px;border-radius:50%;background:#d3a64c;display:inline-block}
+  .cloud-dot.online{background:#70b84d}.cloud-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .cloud-admin{position:fixed;right:18px;bottom:18px;z-index:80;box-shadow:0 10px 30px #17212b25}
+  .cloud-modal{position:fixed;inset:0;background:#101820a8;z-index:120;display:none;align-items:center;justify-content:center;padding:18px}
+  .cloud-modal.open{display:flex}.cloud-box{background:#fff;border-radius:20px;width:min(680px,100%);max-height:86vh;overflow:auto;padding:24px;box-shadow:0 25px 90px #0003}
+  .cloud-box h3{margin:0 0 8px;font-size:20px}.cloud-muted{font-size:12px;color:#73808a;line-height:1.7}
+  .cloud-field{display:grid;gap:6px;margin:13px 0}.cloud-field label{font-size:11px;font-weight:750;color:#53616b}.cloud-field input,.cloud-field textarea,.cloud-field select{width:100%;border:1px solid #dfe5e8;border-radius:10px;padding:11px 12px;background:#fbfcfc;color:#17212b;font:inherit;font-size:13px}
+  .cloud-list{display:grid;gap:8px;margin-top:16px}.cloud-item{border:1px solid #e6ebed;border-radius:12px;padding:11px;display:flex;justify-content:space-between;align-items:center;gap:10px}.cloud-item b{font-size:12px}.cloud-item small{display:block;color:#87929a;font-size:10px;word-break:break-all}.cloud-item-actions{display:flex;gap:6px;flex:none}
+  .cloud-login-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cloud-hidden{display:none!important}
+  .tracker-actions{display:flex;justify-content:flex-end;margin-top:12px}.tracker-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media(max-width:650px){.cloud-bar{padding:0 15px;align-items:flex-start;flex-direction:column}.cloud-login-grid{grid-template-columns:1fr}.cloud-box{padding:19px}.cloud-item{align-items:flex-start;flex-direction:column}.cloud-item-actions{width:100%}}
+
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="nav-wrap">
+  <nav class="nav">
+    <a class="brand" href="#home"><span class="brand-mark">✳</span><span>AI VIDEO PORTFOLIO<small>PERSONAL CREATIVE PROFILE</small></span></a>
+    <div class="nav-links">
+      <a href="#about">关于</a><a href="#skills">能力</a><a href="#works">成片</a><a href="#generation">生成技能</a><a href="#post">后期技能</a><a href="#workflow">工作方式</a>
+    </div>
+    <div class="nav-actions"><button class="btn small" onclick="window.print()">导出 PDF ↗</button><a class="btn dark small" href="#contact">联系我</a></div>
+  </nav>
+</div>
+<div class="cloud-bar">
+  <div class="cloud-state"><i class="cloud-dot" id="cloud-dot"></i><span id="cloud-status">正在连接云端…</span></div>
+  <div class="cloud-actions"><button class="btn small" id="cloud-login-open">管理员登录</button><button class="btn small cloud-hidden" id="cloud-manage-open">管理云端作品</button><button class="btn small cloud-hidden" id="cloud-logout">退出登录</button></div>
+</div>
+<main>
+  <div class="wrap">
+    <section class="hero" id="home">
+      <div>
+        <div class="eyebrow">AI VIDEO CREATION · PORTFOLIO</div>
+        <h1>让想法成像，<br><em>让画面叙事。</em></h1>
+        <p class="hero-copy">聚焦 AI 短视频与漫剧内容制作，覆盖创意拆解、提示词设计、文生图、文生视频、配音字幕与剪辑包装。用可复现的制作过程，展示从创意到成片的完整执行能力。</p>
+        <div class="hero-tags"><span class="tag"><i class="dot"></i>主赛道：治愈情感</span><span class="tag">文生图：即梦</span><span class="tag">文生视频：可灵</span><span class="tag">能力建设周期：3–6 个月</span></div>
+        <div class="hero-cta"><a class="btn dark" href="#works">查看作品案例 <span>↘</span></a><a class="btn" href="#generation">查看生成过程</a></div>
+        <div class="hero-foot"><div><strong>06</strong>作品展示模块</div><div><strong>07</strong>核心能力项目</div><div><strong>3–6M</strong>阶段目标周期</div></div>
+      </div>
+      <div class="hero-visual" aria-label="治愈情感主题视觉封面">
+        <div class="visual-top"><span>VISUAL STORY / 001</span><span class="live-pill">CREATIVE DIRECTION</span></div>
+        <div class="visual-center"><div class="visual-sun"></div><div class="visual-horizon"></div><div class="visual-caption">A SMALL MOMENT, A SOFT STORY</div><div class="visual-title">把日常<br>拍成温柔。</div><div class="visual-note">AI image generation · AI video · voice & edit</div><div class="visual-index">01</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-head"><div><div class="section-kicker">01 / PROFILE</div><h2>创作定位</h2></div><p class="section-intro">以“能独立完成基础 AI 视频项目”为目标，强调流程清晰、画面可控、结果可验证，而不是堆砌工具名称或夸大能力。</p></div>
+      <div class="notice"><span class="notice-icon">!</span><span><b>作品集模板说明：</b>当前版本已搭好内容结构与交互。尚未收到你的真实图片、视频和音频文件，因此所有预览均为视觉占位；请通过各模块的“上传素材”替换。页面不会把占位内容包装成真实项目成果。</span></div>
+      <div class="intro-grid">
+        <div class="card intro-panel"><h3>从脚本到成片，跑通一条完整链路。</h3><p>围绕治愈情感类短视频建立内容方法：先明确主题与情绪，再完成脚本和分镜；用文生图建立角色与场景，用文生视频完成镜头运动，最后统一配音、字幕、剪辑节奏与画面色调。</p><div class="mini-stats"><div class="mini-stat"><strong>01</strong><span>主创作方向</span></div><div class="mini-stat"><strong>02</strong><span>核心生成工具</span></div><div class="mini-stat"><strong>03</strong><span>完整案例目标</span></div></div></div>
+        <div class="card principles"><div class="principle"><span class="principle-num">01</span><div><b>过程可复现</b><span>保留提示词、模型、参数和版本迭代记录。</span></div></div><div class="principle"><span class="principle-num">02</span><div><b>能力边界清晰</b><span>展示已掌握的基础技能，不用“精通”包装学习阶段。</span></div></div><div class="principle"><span class="principle-num">03</span><div><b>结果导向</b><span>每项技能都对应可查看的图片、视频、音频或制作规范。</span></div></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="section-head"><div><div class="section-kicker">02 / SKILL MATRIX</div><h2>能力清单</h2></div><p class="section-intro">按岗位常见实操项拆分，区分生成端与后期端。以下为 3–6 个月阶段目标线，实际掌握程度以作品证据为准。</p></div>
+      <div class="card skill-table">
+        <div class="table-head"><span>能力项目</span><span>目标水平</span><span>对应作品证据</span><span>当前状态</span></div>
+        <div class="skill-row"><div class="skill-name">文生图<span class="skill-sub">TEXT TO IMAGE</span></div><div><span class="level">会用</span></div><div class="evidence">区 4A · 6 张系列图、封面图、角色一致性对照</div><div class="status">待上传证据</div></div>
+        <div class="skill-row"><div class="skill-name">文生视频<span class="skill-sub">TEXT TO VIDEO</span></div><div><span class="level">会用</span></div><div class="evidence">区 4B · 15–20 秒独立演示、三版迭代记录</div><div class="status">待上传证据</div></div>
+        <div class="skill-row"><div class="skill-name">提示词与画面控制<span class="skill-sub">PROMPT & CONTROL</span></div><div><span class="level">会用</span></div><div class="evidence">区 4 · 正负面提示词、镜头参数和生成记录</div><div class="status">待上传证据</div></div>
+        <div class="skill-row"><div class="skill-name">镜头语言执行<span class="skill-sub">SHOT DESIGN</span></div><div><span class="level">会用</span></div><div class="evidence">区 3 · 分镜表、景别与运镜说明</div><div class="status">待上传证据</div></div>
+        <div class="skill-row"><div class="skill-name">剪辑与包装<span class="skill-sub">EDITING & FINISHING</span></div><div><span class="level">熟练</span></div><div class="evidence">区 5C · 节奏剪辑、基础调色、素材前后对照</div><div class="status">待上传证据</div></div>
+        <div class="skill-row"><div class="skill-name">字幕制作<span class="skill-sub">SUBTITLE</span></div><div><span class="level">熟练</span></div><div class="evidence">区 5A · 三类字幕样式、校对前后对照、规范页</div><div class="status">待上传证据</div></div>
+        <div class="skill-row"><div class="skill-name">音色与配音<span class="skill-sub">VOICE & TTS</span></div><div><span class="level">会用</span></div><div class="evidence">区 5B · 三种音色试听、完整配音成片</div><div class="status">待上传证据</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="works">
+      <div class="section-head"><div><div class="section-kicker">03 / SELECTED WORKS</div><h2>成片库 <span class="muted">/ 03</span></h2></div><p class="section-intro">三条案例覆盖不同内容任务。每条作品都应标注制作目标、使用技能与个人负责环节；上传视频后可直接在页面内播放。</p></div>
+      <div class="works-toolbar"><div class="filters"><button class="filter active" data-filter="all">全部作品</button><button class="filter" data-filter="healing">情感治愈</button><button class="filter" data-filter="commerce">电商内容</button><button class="filter" data-filter="remix">二创剪辑</button></div><span class="muted" style="font-size:10px">点击“上传视频”添加本地成片</span></div>
+      <div class="works-grid">
+        <article class="card work-card" data-category="healing">
+          <div class="media-frame" id="work-preview-1"><div class="placeholder-art warm"><div class="orb"></div><div class="mountain"></div><div class="mock-label">雨后，<br>有人等你回家。</div><div class="mock-no">01</div></div><span class="media-chip">01 / EMOTIONAL</span><label class="file-label upload-cover">＋ 上传视频<input type="file" accept="video/*" data-video-target="work-preview-1" data-title="雨后有人等你回家"></label></div>
+          <div class="work-body"><div class="work-meta"><span>01 · 情感治愈</span><span>目标时长 30–45s</span></div><h3>雨后，有人等你回家</h3><p>以日常情绪为切口，用稳定角色、柔和光线和克制的镜头运动完成一条情感短片。</p><div class="skill-chips"><span>文生图</span><span>文生视频</span><span>配音</span><span>字幕</span><span>剪辑</span></div><div class="work-bottom"><small>流程：脚本 → 分镜 → 生成 → 后期</small><button class="text-btn" onclick="openWorkInfo('雨后，有人等你回家','治愈情感方向案例位。建议展示脚本、分镜、角色设定、生成版本与最终成片。')">项目说明 ↗</button></div></div>
+        </article>
+        <article class="card work-card" data-category="commerce">
+          <div class="media-frame" id="work-preview-2"><div class="placeholder-art"><div class="orb"></div><div class="mountain"></div><div class="mock-label">让产品，<br>自然进入生活。</div><div class="mock-no">02</div></div><span class="media-chip">02 / COMMERCE</span><label class="file-label upload-cover">＋ 上传视频<input type="file" accept="video/*" data-video-target="work-preview-2" data-title="产品场景短片"></label></div>
+          <div class="work-body"><div class="work-meta"><span>02 · 电商内容</span><span>目标时长 15–30s</span></div><h3>产品场景短片</h3><p>围绕产品卖点组织画面，强调主体清晰、场景统一、信息表达直接，避免无关视觉元素干扰。</p><div class="skill-chips"><span>产品生图</span><span>镜头控制</span><span>字幕</span><span>节奏剪辑</span></div><div class="work-bottom"><small>流程：卖点提炼 → 镜头设计 → 包装</small><button class="text-btn" onclick="openWorkInfo('产品场景短片','电商方向案例位。建议展示产品主图、场景图、镜头脚本、卖点字幕与成片。')">项目说明 ↗</button></div></div>
+        </article>
+        <article class="card work-card" data-category="remix">
+          <div class="media-frame" id="work-preview-3"><div class="placeholder-art blue"><div class="orb"></div><div class="mountain"></div><div class="mock-label">旧素材，<br>新叙事。</div><div class="mock-no">03</div></div><span class="media-chip">03 / REMIX</span><label class="file-label upload-cover">＋ 上传视频<input type="file" accept="video/*" data-video-target="work-preview-3" data-title="素材二创剪辑"></label></div>
+          <div class="work-body"><div class="work-meta"><span>03 · 二创剪辑</span><span>目标时长 20–40s</span></div><h3>素材二创剪辑</h3><p>从已有素材中重新组织信息和节奏，加入统一字幕、配音与基础调色，并清楚标注素材来源。</p><div class="skill-chips"><span>素材整理</span><span>节奏剪辑</span><span>字幕</span><span>音效</span></div><div class="work-bottom"><small>流程：素材分析 → 重组 → 包装</small><button class="text-btn" onclick="openWorkInfo('素材二创剪辑','二创方向案例位。请在正式作品中注明素材来源、授权情况与个人加工部分。')">项目说明 ↗</button></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="generation">
+      <div class="section-head"><div><div class="section-kicker">04 / GENERATION SKILLS</div><h2>生成技能</h2></div><p class="section-intro">把文生图和文生视频作为独立能力展示，同时保留提示词、模型参数和版本变化，让面试者能看到具体怎么做。</p></div>
+      <div class="subnav"><button class="active" data-panel="image-panel">4A 文生图</button><button data-panel="video-panel">4B 文生视频</button></div>
+      <div class="card skill-block" id="image-panel">
+        <div class="block-top"><div><h3>4A / 文生图 · 系列画面与角色一致性</h3><p>建议上传同一主题的 6 张系列图。系列作品比单张图片更能体现风格控制、构图连贯和角色稳定性。</p></div><span class="block-code">TEXT → IMAGE</span></div>
+        <div class="gallery-grid">
+          <div class="image-slot"><div class="image-preview" id="img-slot-1"><span class="slot-word">场景 01 · 雨后街道</span></div><div class="image-info"><div><b>01 / 建立氛围</b><br><small>环境与光线</small></div><label class="file-label">上传图片<input type="file" accept="image/*" data-image-target="img-slot-1"></label></div></div>
+          <div class="image-slot"><div class="image-preview" id="img-slot-2"><span class="slot-word">场景 02 · 窗边</span></div><div class="image-info"><div><b>02 / 主体出现</b><br><small>角色与构图</small></div><label class="file-label">上传图片<input type="file" accept="image/*" data-image-target="img-slot-2"></label></div></div>
+          <div class="image-slot"><div class="image-preview" id="img-slot-3"><span class="slot-word">场景 03 · 回望</span></div><div class="image-info"><div><b>03 / 情绪变化</b><br><small>人物表情</small></div><label class="file-label">上传图片<input type="file" accept="image/*" data-image-target="img-slot-3"></label></div></div>
+          <div class="image-slot"><div class="image-preview" id="img-slot-4"><span class="slot-word">场景 04 · 归途</span></div><div class="image-info"><div><b>04 / 场景切换</b><br><small>空间关系</small></div><label class="file-label">上传图片<input type="file" accept="image/*" data-image-target="img-slot-4"></label></div></div>
+          <div class="image-slot"><div class="image-preview" id="img-slot-5"><span class="slot-word">场景 05 · 相遇</span></div><div class="image-info"><div><b>05 / 人物互动</b><br><small>动作与视线</small></div><label class="file-label">上传图片<input type="file" accept="image/*" data-image-target="img-slot-5"></label></div></div>
+          <div class="image-slot"><div class="image-preview" id="img-slot-6"><span class="slot-word">场景 06 · 温暖结尾</span></div><div class="image-info"><div><b>06 / 统一收束</b><br><small>色彩与情绪</small></div><label class="file-label">上传图片<input type="file" accept="image/*" data-image-target="img-slot-6"></label></div></div>
+        </div>
+        <div class="prompt-layout">
+          <div class="prompt-card"><div class="prompt-head"><b>正面提示词 / POSITIVE</b><button class="btn small" onclick="copyText('positive-prompt')">复制提示词</button></div><div class="prompt-text" id="positive-prompt">治愈系电影感画面，雨后傍晚的城市街道，年轻人物背影，柔和自然光，湿润路面反射暖色灯光，低饱和青绿色与暖黄色搭配，真实摄影质感，主体清晰，构图留白，细腻光影，统一角色设定，电影静帧，横版 16:9。</div></div>
+          <div class="prompt-card"><div class="prompt-head"><b>负面提示词 / NEGATIVE</b><button class="btn small" onclick="copyText('negative-prompt')">复制提示词</button></div><div class="prompt-text" id="negative-prompt">低清晰度，模糊，过度锐化，畸形手指，多余肢体，面部错位，五官不对称，重复人物，杂乱背景，过曝，过饱和，塑料质感，文字水印，Logo，边缘变形。</div></div>
+        </div>
+        <div class="model-line"><span>主模型：即梦（可按实际替换）</span><span>画幅：16:9</span><span>系列目标：6–9 张</span><span>交付：提示词 + 原图</span></div>
+        <div class="consistency"><div class="consistency-head"><b>同一角色 · 三场景一致性检查</b><span>请上传同一角色在不同场景下的图片进行对照</span></div><div class="compare-people"><div class="person-scene" id="person-scene-1"><div class="person-silhouette"></div><span>场景 A / 室内</span></div><div class="person-scene" id="person-scene-2"><div class="person-silhouette"></div><span>场景 B / 街道</span></div><div class="person-scene" id="person-scene-3"><div class="person-silhouette"></div><span>场景 C / 夜景</span></div></div><div style="display:flex;justify-content:flex-end;margin-top:10px"><label class="file-label">＋ 上传一致性对照图<input type="file" accept="image/*" multiple id="consistency-upload"></label></div></div>
+      </div>
+      <div class="card skill-block hide" id="video-panel">
+        <div class="block-top"><div><h3>4B / 文生视频 · 从描述到动态镜头</h3><p>独立演示建议控制在 15–20 秒。三版迭代尽量使用同一镜头、同一主体，方便直接比较提示词调整带来的变化。</p></div><span class="block-code">TEXT → VIDEO</span></div>
+        <div class="video-iterations">
+          <div class="iteration"><div class="iteration-media" id="iter-v1"><div class="iteration-placeholder">V1</div><span class="iteration-label">版本 01 / 初稿</span><label class="file-label upload-cover">上传视频<input type="file" accept="video/*" data-video-target="iter-v1" data-title="文生视频 V1"></label></div><div class="iteration-info"><b>V1 · 初始生成</b><p>记录原始提示词的生成结果，保留问题，不隐藏失败版本。</p><div class="iteration-footer"><small>观察：主体 / 动作 / 镜头</small><span class="status">待上传</span></div></div></div>
+          <div class="iteration"><div class="iteration-media" id="iter-v2"><div class="iteration-placeholder">V2</div><span class="iteration-label">版本 02 / 加约束</span><label class="file-label upload-cover">上传视频<input type="file" accept="video/*" data-video-target="iter-v2" data-title="文生视频 V2"></label></div><div class="iteration-info"><b>V2 · 约束优化</b><p>增加主体动作、镜头幅度和背景稳定性约束，减少随机变化。</p><div class="iteration-footer"><small>观察：动作连贯 / 稳定度</small><span class="status">待上传</span></div></div></div>
+          <div class="iteration"><div class="iteration-media" id="iter-v3"><div class="iteration-placeholder">V3</div><span class="iteration-label">版本 03 / 可用版</span><label class="file-label upload-cover">上传视频<input type="file" accept="video/*" data-video-target="iter-v3" data-title="文生视频 V3"></label></div><div class="iteration-info"><b>V3 · 可用版本</b><p>选择可用于剪辑的镜头，必要时拆镜头生成，不强行追求一次完成。</p><div class="iteration-footer"><small>目标：可剪辑 / 可交付</small><span class="status">待上传</span></div></div></div>
+        </div>
+        <details><summary>生成参数卡 · 点击展开填写参考</summary><div class="params"><div class="param"><small>模型版本</small><b>可灵 / 实际版本待填</b></div><div class="param"><small>画幅比例</small><b>16:9 / 9:16</b></div><div class="param"><small>视频时长</small><b>15–20 秒</b></div><div class="param"><small>运动幅度</small><b>低至中等</b></div><div class="param"><small>首帧 / 尾帧</small><b>文本生成，无参考图</b></div><div class="param"><small>主体动作</small><b>单人、单主体优先</b></div><div class="param"><small>镜头运动</small><b>缓推 / 轻微平移</b></div><div class="param"><small>迭代记录</small><b>保留 V1 → V3</b></div></div></details>
+        <div class="boundary"><b>能力边界：</b>优先保证单人或单主体镜头稳定；复杂多人互动、连续肢体接触和高难度动作容易出现一致性问题。处理方式是拆分镜头、降低动作复杂度、用剪辑衔接，并对关键帧单独检查。</div>
+      </div>
+    </section>
+
+    <section class="section" id="post">
+      <div class="section-head"><div><div class="section-kicker">05 / POST-PRODUCTION</div><h2>后期技能</h2></div><p class="section-intro">字幕、配音和基础剪辑是成片交付的必要环节。重点展示准确、统一、听得清、节奏顺，而不是堆叠复杂特效。</p></div>
+      <div class="post-grid">
+        <div class="card skill-block">
+          <div class="block-top"><div><h3>5A / 字幕制作</h3><p>自动识别后逐句校对，重点检查错别字、断句、时间轴和安全区。</p></div><span class="block-code">SUBTITLE</span></div>
+          <div class="subtitle-demo"><div class="subtitle-screen"><div class="subtitle-line" id="subtitle-line">慢一点，也没关系。</div></div><div class="subtitle-toolbar"><span style="font-size:9px;color:#aab6bc">预览切换</span><div class="toggle"><button class="active" data-subtitle="on">加字幕版</button><button data-subtitle="off">原片</button></div></div></div>
+          <div class="subtitle-styles"><div class="style-card"><div class="style-sample">今天也要开心</div><b>口播大字</b><small>重点词突出，适合口播</small></div><div class="style-card"><div class="style-sample">「我等你很久了。」</div><b>剧情对话</b><small>人物区分，位置稳定</small></div><div class="style-card"><div class="style-sample">把温柔留给自己</div><b>情绪短句</b><small>短句强调，适度停留</small></div></div>
+          <div class="card rules"><h4>字幕规范 · 基础交付检查</h4><div class="rule-list"><div class="rule">字号层级统一</div><div class="rule">每行控制字数</div><div class="rule">描边或底色保证可读</div><div class="rule">检查时间轴偏移</div><div class="rule">校对错别字与标点</div><div class="rule">避开平台 UI 安全区</div></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn small" onclick="copyText('subtitle-standard')">复制字幕规范</button></div><div id="subtitle-standard" class="hide">字幕规范：1. 字体与字号层级统一；2. 单行字数适中，避免遮挡主体；3. 使用描边或半透明底色保证可读性；4. 逐句校对错别字、标点与断句；5. 检查字幕时间轴与语音同步；6. 重要文字放在平台 UI 安全区内。</div>
+        </div>
+        <div class="card skill-block">
+          <div class="block-top"><div><h3>5B / 音色与配音</h3><p>同一段文案做三种音色对照，展示语速、停顿、重音和情绪调节。</p></div><span class="block-code">VOICE / TTS</span></div>
+          <div class="voice-list">
+            <div class="voice-item" id="voice-item-1"><div class="voice-icon">♫</div><div class="voice-meta"><b>01 · 治愈女声</b><small>轻柔、舒缓、温和叙述</small><div class="wave" aria-hidden="true"><i style="--h:8px"></i><i style="--h:14px"></i><i style="--h:10px"></i><i style="--h:18px"></i><i style="--h:9px"></i><i style="--h:15px"></i><i style="--h:6px"></i><i style="--h:17px"></i><i style="--h:11px"></i><i style="--h:8px"></i><i style="--h:15px"></i><i style="--h:10px"></i></div></div><label class="file-label">上传音频<input type="file" accept="audio/*" data-audio-target="voice-audio-1"></label><audio id="voice-audio-1" controls preload="none"></audio></div>
+            <div class="voice-item" id="voice-item-2"><div class="voice-icon">♫</div><div class="voice-meta"><b>02 · 低沉男声</b><small>沉稳、克制、有叙事感</small><div class="wave" aria-hidden="true"><i style="--h:15px"></i><i style="--h:8px"></i><i style="--h:18px"></i><i style="--h:10px"></i><i style="--h:14px"></i><i style="--h:7px"></i><i style="--h:17px"></i><i style="--h:11px"></i><i style="--h:19px"></i><i style="--h:8px"></i><i style="--h:13px"></i><i style="--h:9px"></i></div></div><label class="file-label">上传音频<input type="file" accept="audio/*" data-audio-target="voice-audio-2"></label><audio id="voice-audio-2" controls preload="none"></audio></div>
+            <div class="voice-item" id="voice-item-3"><div class="voice-icon">♫</div><div class="voice-meta"><b>03 · 活泼口播</b><small>明快、自然、节奏清楚</small><div class="wave" aria-hidden="true"><i style="--h:9px"></i><i style="--h:17px"></i><i style="--h:11px"></i><i style="--h:20px"></i><i style="--h:8px"></i><i style="--h:15px"></i><i style="--h:10px"></i><i style="--h:18px"></i><i style="--h:7px"></i><i style="--h:15px"></i><i style="--h:10px"></i><i style="--h:19px"></i></div></div><label class="file-label">上传音频<input type="file" accept="audio/*" data-audio-target="voice-audio-3"></label><audio id="voice-audio-3" controls preload="none"></audio></div>
+          </div>
+          <div class="prompt-card" style="margin-top:13px"><div class="prompt-head"><b>配音调参记录</b><span class="muted" style="font-size:9px">建议随样音填写</span></div><div class="rule-list"><div class="rule">语速：按内容调整</div><div class="rule">停顿：服务于语义</div><div class="rule">重音：突出关键信息</div><div class="rule">情绪：前后一致</div></div></div>
+          <div class="audio-note">音频不会自动播放。上传文件后可直接试听。请使用平台授权音色或本人声音，不克隆他人声纹；人声应清晰高于配乐，音效不抢对白。</div>
+        </div>
+      </div>
+      <div class="card edit-grid" style="padding:0;overflow:hidden">
+        <div class="edit-panel"><div class="block-code">5C / EDITING</div><h4>剪辑与基础调色</h4><p>用素材原样和成片对照，说明节奏取舍、镜头衔接、色调统一和基础包装。复杂 AE 合成与专业调色台不作为当前能力承诺。</p><div class="skill-chips"><span>节奏剪辑</span><span>基础转场</span><span>音画同步</span><span>基础调色</span><span>素材来源标注</span></div></div>
+        <div class="edit-panel"><h4>调色前 / 后交互对比</h4><div class="grade-stage" id="grade-stage"><div class="grade-scene" id="grade-scene"></div><span class="grade-tag">原始素材</span></div><input class="range" type="range" min="0" max="100" value="50" id="grade-range" aria-label="调色前后对比滑杆"><div class="before-after"><span>原始素材</span><span>调色后</span></div><div style="margin-top:9px"><label class="file-label">上传原始对照图<input type="file" accept="image/*" id="grade-image-upload"></label><label class="file-label" style="margin-left:5px">上传调色后图<input type="file" accept="image/*" id="grade-after-upload"></label></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-head"><div><div class="section-kicker">06 / PROCESS & PROGRESS</div><h2>固定做法与学习轨迹</h2></div><p class="section-intro">把工作过程拆成可重复执行的步骤。每次制作都保留关键文件，方便复盘、修改和向团队交接。</p></div>
+      <div class="workflow">
+        <div class="step"><span class="step-no">STEP 01</span><h4>需求与脚本</h4><p>确认受众、主题、时长和情绪目标，写出可视化脚本。</p></div>
+        <div class="step"><span class="step-no">STEP 02</span><h4>分镜与视觉设定</h4><p>拆分镜头，明确景别、主体、场景、光线和画面比例。</p></div>
+        <div class="step"><span class="step-no">STEP 03</span><h4>图片与视频生成</h4><p>先生成关键画面，再进行视频生成，保留提示词和版本。</p></div>
+        <div class="step"><span class="step-no">STEP 04</span><h4>后期与质检</h4><p>完成配音、字幕、剪辑、调色，逐项检查画面与声音。</p></div>
+      </div>
+      <div class="week-grid">
+        <div class="week"><small>WEEK 01 / 情感向</small><h4>建立视觉基准</h4><p>完成第一条治愈情感短片，先把角色、场景和整体色调定下来。</p><ul><li>情感向成片 01</li><li>系列图 6 张</li><li>分镜表与提示词记录</li></ul></div>
+        <div class="week"><small>WEEK 02 / 电商向</small><h4>练习镜头控制</h4><p>完成第二条电商内容，集中验证主体稳定、运动幅度和镜头衔接。</p><ul><li>电商向成片 02</li><li>文生视频 V1–V3 迭代</li><li>记录并修复 2 处穿帮</li></ul></div>
+        <div class="week"><small>WEEK 03 / 后期专项</small><h4>完善交付能力</h4><p>完成第三条二创内容，统一字幕与音色，并整理个人固定流程。</p><ul><li>二创成片 03</li><li>三种音色对比</li><li>三种字幕样式与规范</li></ul></div>
+      </div>
+      <div class="card tracker">
+        <div class="tracker-head"><h3>制作记录 / 进度面板</h3><span>进度数据与图片、视频、音频及作品信息统一保存在 Supabase 云端</span></div>
+        <div class="tracker-grid"><div><label for="track-images">已完成系列图（张）</label><input type="number" min="0" step="1" id="track-images" value="0"></div><div><label for="track-videos">已完成视频迭代（版）</label><input type="number" min="0" step="1" id="track-videos" value="0"></div><div><label for="track-projects">已完成完整成片（条）</label><input type="number" min="0" step="1" id="track-projects" value="0"></div></div>
+        <div class="tracker-foot"><span id="tracker-cloud-status">正在读取云端进度…</span><span>登录管理员账号后可修改并保存；手机打开同一网址也会读取相同数据。</span></div>
+        <div class="tracker-actions"><button class="btn dark small cloud-hidden" id="save-tracker">保存进度到云端</button></div>
+      </div>
+      <div style="margin-top:25px" class="contact" id="contact"><div><div class="eyebrow" style="color:#b8c3c9">CONTACT / LET'S CREATE</div><h2>把创意变成<br>可交付的内容。</h2><p>期待参与 AI 短视频、漫剧及 AIGC 内容制作项目。</p></div><div class="contact-actions"><button class="btn lime" onclick="copyContact()">复制联系信息</button><button class="btn" style="background:transparent;color:#fff;border-color:#52616a" onclick="showToast('请在 HTML 源码中替换为你的姓名、邮箱或微信。')">编辑联系方式说明</button></div></div>
+    </section>
+    <footer><span>AI VIDEO PORTFOLIO · PERSONAL WORKS</span><span>云端素材与进度同步 · 更新于 2026</span></footer>
+  </div>
+</main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="作品详情"><div class="modal-box"><button class="modal-close" onclick="closeModal()">×</button><div class="modal-media" id="modal-media">作品预览区</div><h3 class="modal-title" id="modal-title"></h3><p class="modal-desc" id="modal-desc"></p></div></div>
+<div class="cloud-modal" id="cloud-modal" role="dialog" aria-modal="true" aria-label="云端管理">
+  <div class="cloud-box">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><h3 id="cloud-modal-title">管理员登录</h3><button class="btn small" id="cloud-close">关闭</button></div>
+    <p class="cloud-muted" id="cloud-modal-help">使用 Supabase Auth 中已创建的管理员邮箱和密码登录。访客无需登录即可查看已发布内容；上传、修改和删除仅限管理员。</p>
+    <div id="cloud-login-form">
+      <div class="cloud-login-grid"><div class="cloud-field"><label for="cloud-email">管理员邮箱</label><input id="cloud-email" type="email" autocomplete="username" placeholder="输入管理员邮箱"></div><div class="cloud-field"><label for="cloud-password">密码</label><input id="cloud-password" type="password" autocomplete="current-password" placeholder="输入密码"></div></div>
+      <button class="btn dark" id="cloud-signin">登录</button>
+    </div>
+    <div id="cloud-management" class="cloud-hidden">
+      <div class="cloud-field"><label for="asset-title">作品标题</label><input id="asset-title" placeholder="选择下方素材后编辑标题"></div>
+      <div class="cloud-field"><label for="asset-description">作品说明</label><textarea id="asset-description" rows="3" placeholder="填写作品说明"></textarea></div>
+      <div class="cloud-login-grid"><div class="cloud-field"><label for="asset-status">发布状态</label><select id="asset-status"><option value="published">公开发布</option><option value="draft">仅管理员可见</option></select></div><div class="cloud-field"><label>当前选中</label><input id="asset-selected" readonly placeholder="尚未选择素材"></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn dark" id="asset-save">保存作品信息</button><button class="btn" id="asset-delete" disabled>删除选中素材</button></div>
+      <div class="cloud-list" id="cloud-assets-list"><div class="cloud-muted">正在读取云端素材…</div></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://vdmcywgcgmurewsxfboh.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_EcrIa60opJiCgJcYEgSYfQ_5XOpeB5S';
+  const STORAGE_BUCKET = 'portfolio-media';
+  // Must match the Supabase Auth user UID allowed by your RLS policies (not a Storage bucket ID).
+  const ADMIN_UID = 'ec78e54a-1ba7-40eb-b546-71278ec15bc4';
+  if(!window.supabase?.createClient){document.getElementById('cloud-status').textContent='Supabase SDK 加载失败，请检查网络后刷新页面。';throw new Error('Supabase SDK failed to load');}
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const objectUrls = [];
+  let currentUser = null, selectedAsset = null, cloudAssets = [];
+  function showToast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>el.classList.remove('show'),2800)}
+  function copyText(id){const el=document.getElementById(id);const text=el?.textContent||'';if(!text){showToast('没有可复制的内容');return}navigator.clipboard?.writeText(text).then(()=>showToast('已复制到剪贴板')).catch(()=>fallbackCopy(text))}
+  function fallbackCopy(text){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');showToast('已复制到剪贴板')}catch(e){showToast('复制失败，请手动复制')}t.remove()}
+  function copyContact(){copyTextFromString('姓名：待填写\n邮箱：待填写\n微信：待填写')}
+  function copyTextFromString(text){navigator.clipboard?.writeText(text).then(()=>showToast('已复制联系信息模板')).catch(()=>fallbackCopy(text))}
+  function openWorkInfo(title,desc){document.getElementById('modal-title').textContent=title;document.getElementById('modal-desc').textContent=desc;document.getElementById('modal-media').innerHTML='<span>请上传真实成片后，在此查看作品细节。</span>';document.getElementById('modal').classList.add('open')}
+  function closeModal(){document.getElementById('modal').classList.remove('open')}
+  document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+  window.addEventListener('scroll',()=>{const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;document.getElementById('progress').style.width=(max?h.scrollTop/max*100:0)+'%'});
+  document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const key=btn.dataset.filter;document.querySelectorAll('.work-card').forEach(card=>card.classList.toggle('hide',key!=='all'&&card.dataset.category!==key))}));
+  document.querySelectorAll('.subnav button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.subnav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('image-panel').classList.toggle('hide',btn.dataset.panel!=='image-panel');document.getElementById('video-panel').classList.toggle('hide',btn.dataset.panel!=='video-panel')}));
+  document.querySelectorAll('[data-subtitle]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-subtitle]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('subtitle-line').classList.toggle('off',btn.dataset.subtitle==='off')}));
+  const modal=document.getElementById('cloud-modal');
+  function openCloudModal(manage=false){modal.classList.add('open');document.getElementById('cloud-login-form').classList.toggle('cloud-hidden',manage);document.getElementById('cloud-management').classList.toggle('cloud-hidden',!manage);document.getElementById('cloud-modal-title').textContent=manage?'云端作品管理':'管理员登录';document.getElementById('cloud-modal-help').textContent=manage?'选择已上传素材，可修改作品标题、说明和公开状态，也可以删除素材。':'使用 Supabase Auth 中已创建的管理员邮箱和密码登录。访客无需登录即可查看已发布内容；上传、修改和删除仅限管理员。';if(manage)renderAssetList()}
+  function closeCloudModal(){modal.classList.remove('open')}
+  document.getElementById('cloud-login-open').onclick=()=>openCloudModal(false);
+  document.getElementById('cloud-manage-open').onclick=()=>openCloudModal(true);
+  document.getElementById('cloud-close').onclick=closeCloudModal;
+  modal.addEventListener('click',e=>{if(e.target===modal)closeCloudModal()});
+  function setCloudState(message,online=false){document.getElementById('cloud-status').textContent=message;document.getElementById('cloud-dot').classList.toggle('online',online)}
+  function setAdminUI(isAdmin){
+    document.getElementById('cloud-login-open').classList.toggle('cloud-hidden',isAdmin);
+    document.getElementById('cloud-manage-open').classList.toggle('cloud-hidden',!isAdmin);
+    document.getElementById('cloud-logout').classList.toggle('cloud-hidden',!isAdmin);
+    document.querySelectorAll('label.file-label').forEach(el=>el.classList.toggle('cloud-hidden',!isAdmin));
+    document.querySelectorAll('#track-images,#track-videos,#track-projects').forEach(el=>el.disabled=!isAdmin);
+    document.getElementById('save-tracker').classList.toggle('cloud-hidden',!isAdmin);
+  }
+  async function refreshAuth(){const {data:{session}}=await supabase.auth.getSession();currentUser=session?.user||null;const admin=!!currentUser&&currentUser.id===ADMIN_UID;setAdminUI(admin);if(admin)setCloudState('管理员已登录 · 云端同步已启用',true);else setCloudState('云端作品展示 · 访客只读',true);return admin}
+  document.getElementById('cloud-signin').onclick=async()=>{const email=document.getElementById('cloud-email').value.trim(),password=document.getElementById('cloud-password').value;if(!email||!password){showToast('请填写邮箱和密码');return}const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error){showToast('登录失败：'+error.message);return}currentUser=data.user;if(currentUser.id!==ADMIN_UID){await supabase.auth.signOut();currentUser=null;showToast('账号 UID 与管理员授权不匹配。请核对页面 ADMIN_UID 是否填写了 Authentication → Users 中的用户 UID，而不是 Storage Bucket ID。');return}await refreshAuth();showToast('管理员登录成功');openCloudModal(true)};
+  document.getElementById('cloud-logout').onclick=async()=>{await supabase.auth.signOut();currentUser=null;setAdminUI(false);setCloudState('云端作品展示 · 访客只读',true);showToast('已退出管理员账号')};
+  function mediaType(file){return file.type.startsWith('image/')?'image':file.type.startsWith('video/')?'video':file.type.startsWith('audio/')?'audio':null}
+  function safeName(name){return name.normalize('NFKD').replace(/[^\w.-]+/g,'_').replace(/^_+|_+$/g,'').slice(-90)||'media'}
+  function categoryForTarget(targetId){const el=document.getElementById(targetId);return el?.closest('.work-card')?.dataset.category|| (targetId.startsWith('img-')||targetId.startsWith('consistency-')||targetId.startsWith('person-scene-')?'generation':targetId.startsWith('iter-')?'generation':targetId.startsWith('voice-')?'post':'portfolio')}
+  function titleForTarget(input,targetId,file){return input.dataset.title||document.querySelector(`[data-image-target="${targetId}"]`)?.closest('.image-slot')?.querySelector('.image-info b')?.textContent||document.getElementById(targetId)?.querySelector('span')?.textContent||document.getElementById(targetId)?.closest('.voice-item')?.querySelector('b')?.textContent||document.getElementById(targetId)?.closest('.iteration')?.querySelector('b')?.textContent||file.name}
+  const TRACKER_SLUG='portfolio-progress-tracker';
+  function trackerValues(){return {images:Math.max(0,Number(document.getElementById('track-images').value)||0),videos:Math.max(0,Number(document.getElementById('track-videos').value)||0),projects:Math.max(0,Number(document.getElementById('track-projects').value)||0)}}
+  async function loadProgressTracker(){
+    const status=document.getElementById('tracker-cloud-status');
+    const {data,error}=await supabase.from('portfolio_content').select('metadata').eq('slug',TRACKER_SLUG).eq('status','published').maybeSingle();
+    if(error){console.warn('Progress tracker read failed:',error);status.textContent='云端进度暂不可读取；请检查 portfolio_content 的访客只读权限。';return}
+    const values=data?.metadata?.tracker||{images:0,videos:0,projects:0};
+    document.getElementById('track-images').value=values.images??0;
+    document.getElementById('track-videos').value=values.videos??0;
+    document.getElementById('track-projects').value=values.projects??0;
+    status.textContent=data?'已从云端读取进度':'尚无云端进度记录，管理员首次保存后会同步到所有设备。';
+  }
+  document.getElementById('save-tracker').onclick=async()=>{
+    if(!currentUser||currentUser.id!==ADMIN_UID){showToast('请先以管理员身份登录');return}
+    const values=trackerValues();
+    const {error}=await supabase.from('portfolio_content').upsert({slug:TRACKER_SLUG,title:'制作记录 / 进度面板',description:'作品集制作进度数据',category:'workflow',status:'published',sort_order:999,metadata:{tracker:values},updated_at:new Date().toISOString()},{onConflict:'slug'});
+    if(error){showToast('进度保存失败：'+error.message);document.getElementById('tracker-cloud-status').textContent='保存失败，请检查数据库权限。';return}
+    document.getElementById('tracker-cloud-status').textContent='已保存到 Supabase 云端，其他设备刷新后可同步查看。';
+    showToast('制作进度已同步到云端');
+  };
+  async function uploadAsset(file,targetId,title){
+    if(!currentUser||currentUser.id!==ADMIN_UID){showToast('请先以管理员身份登录');return}
+    const type=mediaType(file);if(!type){showToast('仅支持图片、视频和音频文件');return}
+    if(file.size>50*1024*1024){showToast('文件超过当前 Storage 50MB 单文件限制');return}
+    const slug='slot-'+targetId.replace(/[^a-zA-Z0-9_-]/g,'-');
+    const {data:content,error:contentError}=await supabase.from('portfolio_content').upsert({slug,title,description:'',category:categoryForTarget(targetId),status:'published',sort_order:0,metadata:{target_id:targetId}},{onConflict:'slug'}).select('id').single();
+    if(contentError){showToast('作品信息保存失败：'+contentError.message);return}
+    showToast('正在上传素材，请保持页面打开…');
+    const path=`${currentUser.id}/${targetId}/${Date.now()}-${safeName(file.name)}`;
+    const {error:uploadError}=await supabase.storage.from(STORAGE_BUCKET).upload(path,file,{upsert:false,contentType:file.type||undefined});
+    if(uploadError){showToast('素材上传失败：'+uploadError.message);return}
+    const {error:insertError}=await supabase.from('portfolio_assets').insert({content_id:content.id,bucket_id:STORAGE_BUCKET,object_path:path,media_type:type,title,file_name:file.name,mime_type:file.type||null,file_size:file.size,metadata:{target_id:targetId}});
+    if(insertError){await supabase.storage.from(STORAGE_BUCKET).remove([path]);showToast('素材记录保存失败：'+insertError.message);return}
+    showToast('已上传至云端，正在同步预览…');await loadCloudAssets();
+  }
+  function applyAsset(asset){const targetId=asset.metadata?.target_id;if(!targetId)return;const target=document.getElementById(targetId);if(!target)return;const url=supabase.storage.from(asset.bucket_id||STORAGE_BUCKET).getPublicUrl(asset.object_path).data.publicUrl;
+    if(asset.media_type==='image'){
+      if(targetId==='grade-stage'||targetId==='grade-scene'){target.style.backgroundImage=`url("${url}")`;target.style.backgroundSize='cover';target.style.backgroundPosition='center';if(targetId==='grade-scene')target.style.filter='none';return}
+      if(target.classList.contains('person-scene')){target.style.backgroundImage=`linear-gradient(0deg,rgba(0,0,0,.3),transparent),url("${url}")`;target.style.backgroundSize='cover';target.style.backgroundPosition='center';target.querySelector('.person-silhouette')?.remove();const label=target.querySelector('span');if(label)label.textContent=asset.file_name;return}
+      let img=target.querySelector('img');if(!img){img=document.createElement('img');target.appendChild(img)}img.src=url;img.alt=asset.title||asset.file_name;const word=target.querySelector('.slot-word');if(word)word.textContent=asset.file_name;
+    }else if(asset.media_type==='video'){
+      target.querySelectorAll('video,.placeholder-art,.iteration-placeholder').forEach(el=>el.remove());const video=document.createElement('video');video.src=url;video.controls=true;video.playsInline=true;video.preload='metadata';target.insertBefore(video,target.firstChild);const chip=target.querySelector('.media-chip');if(chip)chip.textContent='云端素材 · '+asset.file_name;const label=target.querySelector('.upload-cover');if(label)label.style.display='';
+    }else if(asset.media_type==='audio'){
+      const audio=targetId.startsWith('voice-audio-')?target:document.getElementById(targetId);if(audio){audio.src=url;audio.style.display='block';audio.closest('.voice-item')?.classList.add('has-audio')}
+    }
+  }
+  async function loadCloudAssets(){
+    const {data,error}=await supabase.from('portfolio_assets').select('*, portfolio_content!inner(status,title,description,category)').eq('portfolio_content.status','published').order('created_at',{ascending:true});
+    if(error){console.warn(error);setCloudState('云端读取失败，请检查表权限',false);return}
+    cloudAssets=data||[];cloudAssets.forEach(applyAsset);return cloudAssets;
+  }
+  async function renderAssetList(){
+    const list=document.getElementById('cloud-assets-list');list.innerHTML='<div class="cloud-muted">正在读取素材…</div>';
+    const {data,error}=await supabase.from('portfolio_assets').select('*, portfolio_content!inner(id,slug,title,description,status,category)').order('created_at',{ascending:false});
+    if(error){list.innerHTML=`<div class="cloud-muted">读取失败：${error.message}</div>`;return}
+    cloudAssets=data||[];if(!cloudAssets.length){list.innerHTML='<div class="cloud-muted">目前还没有上传素材。登录后可在各模块点击“上传图片 / 视频 / 音频”。</div>';return}
+    list.innerHTML='';cloudAssets.forEach(asset=>{const row=document.createElement('div');row.className='cloud-item';const info=document.createElement('div');const b=document.createElement('b');b.textContent=asset.title||asset.file_name;const sm=document.createElement('small');sm.textContent=`${asset.media_type} · ${asset.file_name} · ${asset.portfolio_content?.status==='published'?'公开':'草稿'}`;info.append(b,sm);const actions=document.createElement('div');actions.className='cloud-item-actions';const edit=document.createElement('button');edit.className='btn small';edit.textContent='编辑';edit.onclick=()=>selectAsset(asset);actions.append(edit);row.append(info,actions);list.append(row)});
+  }
+  function selectAsset(asset){selectedAsset=asset;document.getElementById('asset-title').value=asset.portfolio_content?.title||asset.title||'';document.getElementById('asset-description').value=asset.portfolio_content?.description||'';document.getElementById('asset-status').value=asset.portfolio_content?.status||'published';document.getElementById('asset-selected').value=asset.file_name;document.getElementById('asset-delete').disabled=false}
+  document.getElementById('asset-save').onclick=async()=>{if(!selectedAsset)return showToast('请先选择一项素材');const c=selectedAsset.portfolio_content;const {error}=await supabase.from('portfolio_content').update({title:document.getElementById('asset-title').value.trim()||selectedAsset.title,description:document.getElementById('asset-description').value.trim(),status:document.getElementById('asset-status').value,updated_at:new Date().toISOString()}).eq('id',c.id);if(error){showToast('保存失败：'+error.message);return}showToast('作品信息已更新');selectedAsset=null;document.getElementById('asset-delete').disabled=true;await renderAssetList();await loadCloudAssets()};
+  document.getElementById('asset-delete').onclick=async()=>{if(!selectedAsset||!confirm('确定删除这项云端素材？此操作不可撤销。'))return;const a=selectedAsset;const {error:removeError}=await supabase.storage.from(a.bucket_id||STORAGE_BUCKET).remove([a.object_path]);if(removeError){showToast('云端文件删除失败：'+removeError.message);return}const {error}=await supabase.from('portfolio_assets').delete().eq('id',a.id);if(error){showToast('文件已删除，但数据库记录删除失败：'+error.message);return}selectedAsset=null;document.getElementById('asset-selected').value='';document.getElementById('asset-delete').disabled=true;showToast('素材已删除');await renderAssetList();await loadCloudAssets()};
+  // All media upload inputs now save to Supabase Storage + database.
+  document.querySelectorAll('input[data-image-target],input[data-video-target],input[data-audio-target]').forEach(input=>input.addEventListener('change',async()=>{const file=input.files?.[0];if(!file)return;const targetId=input.dataset.imageTarget||input.dataset.videoTarget||input.dataset.audioTarget;const title=titleForTarget(input,targetId,file);await uploadAsset(file,targetId,title);input.value=''}));
+  document.getElementById('consistency-upload').addEventListener('change',async e=>{const files=[...(e.target.files||[])].slice(0,3);for(let i=0;i<files.length;i++)await uploadAsset(files[i],`person-scene-${i+1}`,`角色一致性对照 ${i+1}`);e.target.value=''});
+  const gradeRange=document.getElementById('grade-range'),gradeScene=document.getElementById('grade-scene');gradeRange.addEventListener('input',()=>{gradeScene.style.clipPath=`inset(0 ${100-gradeRange.value}% 0 0)`});
+  document.getElementById('grade-image-upload').addEventListener('change',async e=>{const f=e.target.files?.[0];if(f)await uploadAsset(f,'grade-stage','调色前原始素材');e.target.value=''});
+  document.getElementById('grade-after-upload').addEventListener('change',async e=>{const f=e.target.files?.[0];if(f)await uploadAsset(f,'grade-scene','调色后素材');e.target.value=''});
+  // All content and progress values are cloud-backed; no project data is stored only in this browser.
+  window.addEventListener('beforeunload',()=>objectUrls.forEach(URL.revokeObjectURL));
+  (async()=>{await refreshAuth();await loadCloudAssets();await loadProgressTracker();supabase.auth.onAuthStateChange(()=>{setTimeout(async()=>{await refreshAuth();await loadProgressTracker()},0)})})();
+</script>
+</body>
+</html>
